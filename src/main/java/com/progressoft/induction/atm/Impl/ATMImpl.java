@@ -16,9 +16,10 @@ public class ATMImpl implements ATM {
         BigDecimal balance = checkBalance(accountNumber);
         BigDecimal atmTotalCash = bankingSystem.sumOfMoneyInAtm();
 
-        if (balance.compareTo(amount) < 0 ){
+        if (balance.compareTo(amount) < 0 || balance.compareTo(BigDecimal.ZERO)==0){
             throw new InsufficientFundsException("Insufficient fund in the account.");
         }
+
         if (atmTotalCash.compareTo(amount) < 0 ) {
             throw  new NotEnoughMoneyInATMException("Not enough money in the ATM");
         }

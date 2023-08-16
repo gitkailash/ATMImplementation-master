@@ -3,6 +3,8 @@ package com.progressoft.induction.atm.Impl;
 import com.progressoft.induction.atm.BankingSystem;
 import com.progressoft.induction.atm.Banknote;
 import com.progressoft.induction.atm.exceptions.AccountNotFoundException;
+import com.progressoft.induction.atm.exceptions.InsufficientFundsException;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -67,8 +69,10 @@ public class BankingSystemImpl implements BankingSystem {
     public void debitAccount(String accountNumber, BigDecimal amount) {
         //your code
         BigDecimal currentBalance = accountBalanceMap.getOrDefault(accountNumber, BigDecimal.ZERO);
-        if (currentBalance.compareTo(amount) == 0){
+        if (currentBalance.compareTo(amount) >= 0){
             accountBalanceMap.put(accountNumber, currentBalance.subtract(amount));
+        }else {
+            throw new InsufficientFundsException("Insufficient fund in the account.");
         }
 
     }
